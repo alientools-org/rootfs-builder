@@ -1,41 +1,40 @@
-name: Build Rootfs Image
+name: Build rootfs.ext4
 
 on:
   push:
     branches: [ main ]
-  workflow_dispatch:  # manuell auslösbar
+  workflow_dispatch:
 
 jobs:
-  build:
+  build-rootfs:
     runs-on: ubuntu-latest
 
     permissions:
       contents: write
 
     steps:
-      - name: 📥 Repository klonen
+      - name: 📥 Repository auschecken
         uses: actions/checkout@v3
 
-      - name: 🔧 Python & Abhängigkeiten installieren
+      - name: 🔧 Python einrichten
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
-      - name: 🐍 Python-Abhängigkeiten installieren (falls vorhanden)
-        run: |
-          python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - name: 🧪 Verzeichnisinhalt anzeigen
+        run: ls -al
 
-      - name: 🏗️ Rootfs-Verzeichnis vorbereiten (Beispiel)
-        run: |
-          mkdir -p build/rootfs/etc
-          echo "hello" > build/rootfs/etc/hostname
+      - name: 🐍 new.py ausführen
+        run: sudo python3 rootfs/new.py
 
-      - name: 🐍 Python-Skript ausführen
+      - name: ✅ Ergebnis prüfen
         run: |
-          sudo python3 new.py
+          if [ ! -f build/rootfs.ext4 ]; then
+            echo "❌ rootfs.ext4 wurde nicht erstellt!"
+            exit 1
+          fi
 
-      - name: 📦 Rootfs-Image als Artefakt bereitstellen
+      - name: 📦 Image als Download-Artefakt speichern
         uses: actions/upload-artifact@v4
         with:
           name: rootfs-image
