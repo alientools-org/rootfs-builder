@@ -1,0 +1,16 @@
+# Allgemeine Einstellungen
+dtparam=audio=on
+dtparam=i2c_arm=on
+dtparam=spi=on
+
+# Für Raspberry Pi 5
+arm_boost=1
+
+# Optional: HDMI-Einstellungen (falls Sie eine Anzeige verwenden)
+# hdmi_force_hotplug=1
+# hdmi_group=1
+# hdmi_mode=16  # 1080p 60Hz
+
+# Wichtig für die serielle Konsole auf dem Pi 5
+enable_uart=1
+kernel=kernel8.img
