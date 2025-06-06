@@ -24,6 +24,9 @@ jobs:
       - name: 🧪 Verzeichnisinhalt anzeigen
         run: ls -al
 
+      - name: RUn Pip
+        run: pip install tqdm pyaml requests
+
       - name: 🐍 new.py ausführen
         run: sudo python3 rootfs/new.py
 
