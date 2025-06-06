@@ -27,9 +27,13 @@ jobs:
       - name: RUn Pip
         run: pip install tqdm pyaml requests
 
+      - name: 📦 Python-Abhängigkeiten installieren (systemweit)
+        run: |
+          sudo pip install tqdm pyaml requests
       - name: 🐍 new.py ausführen
-        run: sudo python3 rootfs/new.py
+        run: sudo -E python3 rootfs/new.py
 
+      
       - name: ✅ Ergebnis prüfen
         run: |
           if [ ! -f build/rootfs.ext4 ]; then
